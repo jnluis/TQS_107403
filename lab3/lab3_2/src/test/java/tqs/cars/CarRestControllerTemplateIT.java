@@ -3,9 +3,7 @@ package tqs.cars;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,8 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@AutoConfigureTestDatabase
 
 // switch AutoConfigureTestDatabase with TestPropertySource to use a real database
-@TestPropertySource( locations = "application-integrationtest.properties")
-class CarRestControllerTemplateAPITests {
+@TestPropertySource( locations = "classpath:application-integrationtest.properties")
+class CarRestControllerTemplateIT {
 
     // will need to use the server port for the invocation url
     @LocalServerPort
