@@ -45,7 +45,7 @@ public class BookSteps {
                 Utils.isoTextToLocalDate( tableEntry.get("published") ) );
     }
 
-    @Given("Given I have the following books in the library")
+    @Given("I have the following books in the library")
     public void setup(DataTable table) {
         List<Map<String, String>> rows = table.asMaps(String.class, String.class);
         library = new Library();    
@@ -61,18 +61,16 @@ public class BookSteps {
         foundedBooks = library.findBooks(from, to);
     }
 
-    @When("the customer searches for books published by {string}")
+    @When("the customer searches for the book with the author {string}")
     public void searchBooksByAuthor(String author) {
         log.info("Searching for books published by {}",author);
-        //foundedBooks = library.findBooks(from, to);
-        // Replace by findAuthor
+        foundedBooks = library.findBooksByAuthor(author);
     }
 
-    @When("the customer searches for books published with title {string}")
+    @When("the customer searches for the book with the title {string}")
     public void searchBooksByTitle(String title) {
         log.info("Searching for books with title {}", title);
-        //foundedBooks = library.findBooks(from, to);
-        // Replace by findTitle
+        foundedBooks = library.findBooksByTitle(title);
     }
 
 
