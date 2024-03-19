@@ -1,18 +1,16 @@
 package deti.ua.tqs;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Book {
     private final String title;
     private final String author;
-    private final Date published;
+    private final LocalDate published;
 
-    public Book(String title, String author, LocalDateTime published) {
+    public Book(String title, String author, LocalDate published) {
         this.title = title;
         this.author = author;
-        this.published= Date.from(published.toInstant(ZoneOffset.UTC));
+        this.published= published;
     }
     public String getTitle(){
         return title;
@@ -20,7 +18,7 @@ public class Book {
     public String getAuthor() {
         return author;
     }
-    public Date getPublished(){
+    public LocalDate getPublished(){
         return published;
     }
     // constructors, getter, setter ommitted

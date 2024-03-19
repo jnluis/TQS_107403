@@ -1,12 +1,9 @@
 package deti.ua.tqs;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Library {
@@ -16,14 +13,18 @@ public class Library {
         store.add(book);
     }
 
-    public List<Book> findBooks(final Date from, final Date to) {
-        Calendar end = Calendar.getInstance();
-        end.setTime(to);
-        end.roll(Calendar.YEAR, 1);
+    public List<Book> findBooks(LocalDate from, LocalDate to) {
+        
+        List<Book> foundBooks = new ArrayList<>();
 
-        return store.stream().filter(book -> {
-            return from.before(book.getPublished()) && end.getTime().after(book.getPublished());
-        }).sorted(Comparator.comparing(Book::getPublished).reversed()).collect(Collectors.toList());
+        for (Book book : store) {
+            System.out.println(book.getPublished() + " " + from + " " + to);
+            System.out.println(book.getPublished().isAfter(from) + " " + book.getPublished().isBefore(to));
+            if (book.getPublished().isAfter(from) && book.getPublished().isBefore(to)) foundBooks.add(book);
+            
+        }
+
+        return foundBooks;
     }
     public List<Book> findBooksByTitle(String title) {
         return store.stream().filter( book -> {return title.equals(book.getTitle());}).sorted(Comparator.comparing(Book::getTitle).reversed()).collect(Collectors.toList());
