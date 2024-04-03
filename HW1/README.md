@@ -9,3 +9,6 @@
 ```mvn test```
 
 ```mvn failsafe:integration-test```
+
+This on docker compose is breaking frontend
+- /app/node_modules

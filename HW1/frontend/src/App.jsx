@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MissingPage from "./pages/MissingPage";
-import './App.css'
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/dissertacoes/:id" element={<DissertationsDetails />} />
         <Route path="/perfil" element={<Profile />} /> */}
 
-        <Route path="*" element={<MissingPage />} />
+        {/* <Route path="*" element={<MissingPage />} /> */}
       </Routes>
     </BrowserRouter>
   );

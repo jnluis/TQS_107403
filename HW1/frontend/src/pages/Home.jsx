@@ -1,35 +1,100 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
 
-function Home() {
-    return (
-        <>
-            <div className="jumbotron bg-white p-8 mt-4">
-                <h1 className="text-4xl font-bold">Welcome to the Simple Travel Agency!</h1>
-                <p className="mt-4">This is a sample site you can test with BlazeMeter!</p>
-                <p className="mt-2">Check out our <a href="vacation.html" className="text-blue-500">destination of the week! The Beach!</a></p>
-            </div>
-            <div className="container mx-auto p-4">
-                <h2 className="text-2xl">Choose your departure city:</h2>
-                <form action="reserve.php" method="post" className="mt-4">
-                    {/* Departure City Select */}
-                    <select name="fromPort" className="form-control">
-                        {/* Options */}
-                    </select>
+const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']; // Example cities
 
-                    <h2 className="text-2xl mt-4">Choose your destination city:</h2>
-                    {/* Destination City Select */}
-                    <select name="toPort" className="form-control mt-2">
-                        {/* Options */}
-                    </select>
+const Home = () => {
+  const [formData, setFormData] = useState({
+    origin: '',
+    destination: '',
+    date: '',
+    passengerName: '',
+    passengerEmail: '',
+  });
 
-                    <div className="mt-4">
-                        <input type="submit" value="Find Flights" className="btn bg-blue-500 text-white p-2" />
-                    </div>
-                </form>
-            </div>
-        </>
-    );
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    // Process or send the data as needed
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <>
+    <div className="space-y-6 space-x-6">
+        <h1>Welcome to the Bus Ticket Service </h1>
+        </div>
+    <div className="max-w-md mx-auto my-10 p-5 card bg-base-100 shadow-xl">
+      <form onSubmit={handleSubmit} className="form-control">
+        <label className="label">
+          <span className="label-text">Origin</span>
+        </label>
+        <select
+          name="origin"
+          onChange={handleChange}
+          value={formData.origin}
+          className="select select-bordered w-full"
+        >
+          <option value="">Select Origin</option>
+          {cities.map(city => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
+
+        <label className="label">
+          <span className="label-text">Destination</span>
+        </label>
+        <select
+          name="destination"
+          onChange={handleChange}
+          value={formData.destination}
+          className="select select-bordered w-full"
+        >
+          <option value="">Select Destination</option>
+          {cities.map(city => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
+
+        <label className="label">
+          <span className="label-text">Date</span>
+        </label>
+        <input
+          type="date"
+          name="date"
+          onChange={handleChange}
+          value={formData.date}
+          className="input input-bordered w-full"
+        />
+        <label className="label">
+        <span className="label-text">Currency</span>
+        </label>
+        <select
+          name="origin"
+          onChange={handleChange}
+          value={formData.origin}
+          className="select select-bordered w-full"
+        >
+          <option value="">Select currency</option>
+          {cities.map(city => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
+
+
+        <button type="submit" className="btn btn-primary mt-4">
+          Submit
+        </button>
+      </form>
+    </div>
+    </>
+  );
+};
 
 export default Home;
