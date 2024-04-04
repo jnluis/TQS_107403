@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']; // Example cities
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     origin: '',
     destination: '',
@@ -15,6 +18,7 @@ const Home = () => {
     e.preventDefault();
     console.log(formData);
     // Process or send the data as needed
+    navigate('/trip');
   };
 
   const handleChange = (e) => {
@@ -27,10 +31,10 @@ const Home = () => {
 
   return (
     <>
-    <div className="space-y-6 space-x-6">
-        <h1>Welcome to the Bus Ticket Service </h1>
-        </div>
     <div className="max-w-md mx-auto my-10 p-5 card bg-base-100 shadow-xl">
+      <div className="mb-4">
+        <h1 className='text-2xl text-white'>Welcome to the Bus Ticket Service </h1>
+        </div>
       <form onSubmit={handleSubmit} className="form-control">
         <label className="label">
           <span className="label-text">Origin</span>
@@ -87,9 +91,8 @@ const Home = () => {
           ))}
         </select>
 
-
         <button type="submit" className="btn btn-primary mt-4">
-          Submit
+          Search
         </button>
       </form>
     </div>
