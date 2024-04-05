@@ -1,10 +1,10 @@
-package deti.tqs;
+package deti.tqs.ua.HW1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HwApplicationTests {
+class Hw1ApplicationTests {
 
 	@Test
 	void contextLoads() {

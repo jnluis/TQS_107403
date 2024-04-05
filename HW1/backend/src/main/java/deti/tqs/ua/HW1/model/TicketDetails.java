@@ -1,4 +1,4 @@
-package deti.tqs.model;
+package deti.tqs.ua.HW1.model;
 
 import jakarta.persistence.*;
 import lombok.*;

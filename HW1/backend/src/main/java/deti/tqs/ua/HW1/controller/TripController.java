@@ -1,6 +1,7 @@
-package deti.tqs.controller;
-import deti.tqs.model.Trip;
-import deti.tqs.service.TripService;
+package deti.tqs.ua.HW1.controller;
+
+import deti.tqs.ua.HW1.model.Trip;
+import deti.tqs.ua.HW1.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

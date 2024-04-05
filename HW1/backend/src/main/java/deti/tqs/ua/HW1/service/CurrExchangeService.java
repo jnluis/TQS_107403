@@ -1,4 +1,4 @@
-package deti.tqs.service;
+package deti.tqs.ua.HW1.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,17 +35,16 @@ public class CurrExchangeService {
     }
     public double exchange(String from, String to) throws Exception {
 
-            try {
-                Double rate = Double.parseDouble(cachedRates.get(to).toString());
-                logger.info("Cache hit, returning exchange rate");
-                return rate;
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new Exception("Currency not found");
-            }
-
+        try {
+            Double rate = Double.parseDouble(cachedRates.get(to).toString());
+            logger.info("Cache hit, returning exchange rate");
+            return rate;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Currency not found");
         }
 
+    }
 
     public List<String> listCurrencies() {
         logger.info("Currencies list requested");
@@ -54,5 +53,4 @@ public class CurrExchangeService {
         }
         return currencies;
     }
-
 }

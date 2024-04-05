@@ -1,4 +1,4 @@
-package deti.tqs;
+package deti.tqs.ua.HW1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,9 +10,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class HwApplication {
+public class Hw1Application {
+
 	public static void main(String[] args) {
-		SpringApplication.run(HwApplication.class, args);
+		SpringApplication.run(Hw1Application.class, args);
 	}
 
 	@Bean
@@ -26,4 +27,5 @@ public class HwApplication {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+
 }

@@ -1,18 +1,15 @@
-package deti.tqs;
-
-import deti.tqs.model.Trip;
-import deti.tqs.repository.TripRepo;
+package deti.tqs.ua.HW1;
+import deti.tqs.ua.HW1.model.Trip;
+import deti.tqs.ua.HW1.repository.TripRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-
 @Component
 @ConditionalOnProperty(name = "spring.profiles.active", havingValue = "dev")
 public class GeneratedValues implements ApplicationRunner {
-
     private static final Logger logger = LoggerFactory.getLogger(GeneratedValues.class);
 
     @Autowired

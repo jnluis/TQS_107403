@@ -1,6 +1,6 @@
-package deti.tqs.repository;
+package deti.tqs.ua.HW1.repository;
 
-import deti.tqs.model.Trip;
+import deti.tqs.ua.HW1.model.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

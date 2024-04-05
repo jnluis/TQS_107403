@@ -1,8 +1,7 @@
-package deti.tqs.service;
+package deti.tqs.ua.HW1.service;
 
-
-import deti.tqs.model.Trip;
-import deti.tqs.repository.TripRepo;
+import deti.tqs.ua.HW1.model.Trip;
+import deti.tqs.ua.HW1.repository.TripRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +60,4 @@ public class TripService {
     public List<String> getDestinations() {
         return tripsRepo.findDestinations();
     }
-
 }

@@ -1,8 +1,9 @@
-package deti.tqs.service;
-import deti.tqs.model.TicketDetails;
-import deti.tqs.model.Trip;
-import deti.tqs.repository.TicketRepo;
-import deti.tqs.repository.TripRepo;
+package deti.tqs.ua.HW1.service;
+
+import deti.tqs.ua.HW1.model.TicketDetails;
+import deti.tqs.ua.HW1.model.Trip;
+import deti.tqs.ua.HW1.repository.TicketRepo;
+import deti.tqs.ua.HW1.repository.TripRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
