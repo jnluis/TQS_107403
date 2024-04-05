@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,26 +17,43 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(path = "/api/trip")
+@RequestMapping(path = "/api/trips")
 @Tag(name = "Trip", description = "Operations for trips")
 public class TripController {
     private static final Logger logger = LoggerFactory.getLogger(TripController.class);
 
     @Autowired
-    private TripService TripService;
+    private TripService tripService;
 
-    @GetMapping()
+    @GetMapping("/list")
     @Operation(summary = "Get all types of grapes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
     })
-    public ResponseEntity<List<Trip>> getAllTrips(){
-        try {
-            return ResponseEntity.ok(TripService.getTrip());
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<Trip>> listTrips(@RequestParam(required = false) String origin,
+                                                @RequestParam(required = false) String destination,
+                                                @RequestParam(required = false) String date ,
+                                                @RequestParam(required = false) String currency) {
+        logger.info("Trips List requested");
+        return ResponseEntity.ok(tripService.listTrips(origin, destination, date, currency));
+    }
 
+    @GetMapping("/dates")
+    public ResponseEntity<List<String>> getDates() {
+        logger.info("Dates list requested");
+        return ResponseEntity.ok(tripService.getDates());
+    }
+
+    @GetMapping("/origins")
+    public ResponseEntity<List<String>> getOrigins() {
+        logger.info("Origins list requested");
+        return ResponseEntity.ok(tripService.getOrigins());
+    }
+
+    @GetMapping("/destinations")
+    public ResponseEntity<List<String>> getDestinations() {
+        logger.info("Destinations list requested");
+        return ResponseEntity.ok(tripService.getDestinations());
     }
 }

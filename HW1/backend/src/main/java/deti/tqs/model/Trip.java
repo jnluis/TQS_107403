@@ -15,7 +15,7 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Let JPA generate ID
     private int id;
 
-    private int BusNumber;
+    private String BusNumber;
     private String origin;
     private String destination;
     private String date;
