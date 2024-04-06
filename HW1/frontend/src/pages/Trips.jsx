@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Trip() {
+    const navigate = useNavigate();
+
+    const goBack = () => {
+        navigate(-1);
+      }
 //   const [flights, setFlights] = useState([]);
 
 //   useEffect(() => {
@@ -53,32 +59,36 @@ const flights = [
   ];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container ml-48  px-4">
       <h3 className="text-lg font-semibold">Flights from Paris to Buenos Aires:</h3>
-      <table className="table-fixed border-collapse border border-slate-400 w-full mt-4">
+      <div className='overflow-x-auto'>
+      <table className="table table-fixed w-full mt-4">
         <thead>
-          <tr className="bg-slate-200">
-            <th className="border border-slate-300">Choose</th>
-            <th className="border border-slate-300">Flight #</th>
-            <th className="border border-slate-300">Airline</th>
-            <th className="border border-slate-300">Departs: Paris</th>
-            <th className="border border-slate-300">Arrives: Buenos Aires</th>
-            <th className="border border-slate-300">Price</th>
+          <tr className="text-white text-xl">
+            <th>Choose</th>
+            <th>Flight #</th>
+            <th>Airline</th>
+            <th>Departs: Paris</th>
+            <th>Arrives: Buenos Aires</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
           {flights.map((flight, index) => (
-            <tr key={index} className="hover:bg-slate-100">
-              <td className="border border-slate-300 p-2"><button className="btn btn-primary btn-sm">Choose This Flight</button></td>
-              <td className="border border-slate-300 p-2">{flight.number}</td>
-              <td className="border border-slate-300 p-2">{flight.airline}</td>
-              <td className="border border-slate-300 p-2">{flight.departs}</td>
-              <td className="border border-slate-300 p-2">{flight.arrives}</td>
-              <td className="border border-slate-300 p-2">{flight.price}</td>
+            <tr key={index} className="hover:bg-secondary">
+              <td><button className="btn btn-primary btn-sm">Choose This Bus</button></td>
+              <td>{flight.number}</td>
+              <td>{flight.airline}</td>
+              <td>{flight.departs}</td>
+              <td>{flight.arrives}</td>
+              <td>{flight.price}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      <button className="btn btn-primary mt-4" onClick={goBack}>Back</button>
+      
     </div>
   );
 }
