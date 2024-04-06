@@ -1,5 +1,7 @@
 package deti.tqs.ua.HW1.service;
 
+import deti.tqs.ua.HW1.exception.CurrencyNotFoundException;
+import deti.tqs.ua.HW1.exception.ExternalServiceException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,11 +84,10 @@ public class CurrExchangeService {
         return response.toString();
     }
 
-    public List<String> listCurrencies() {
+    public List<String> listCurrencies() throws Exception{
         logger.info("Currencies list requested");
-        if (currencies == null) {
-            logger.error("Currencies list not found/null");
-        }
+        if (currencies == null)
+            exchange("EUR", "USD");
         return currencies;
     }
 
@@ -93,37 +95,58 @@ public class CurrExchangeService {
         return !cachedRates.isEmpty() && lastCaching != 0 && System.currentTimeMillis() < lastCaching + cacheTTL;
     }
 
-    public double exchange(String from, String to) throws Exception {
-
-        if (isCacheValid()) {
-
-            Double rate = Double.parseDouble(cachedRates.get(to).toString());
-            logger.info("Cache hit, returning exchange rate");
-            return rate;
-
+    public double exchange(String from, String to) throws CurrencyNotFoundException, ExternalServiceException {
+        // Check if the cache contains the conversion rates for the 'from' currency and is still valid
+        if (isCacheValid() && cachedRates.containsKey(from)) {
+            Map<String, Double> rates = (Map<String, Double>) cachedRates.get(from);
+            Double rate = rates.get(to);
+            if (rate != null) {
+                logger.info("Cache hit, returning exchange rate");
+                return rate;
+            } else {
+                throw new CurrencyNotFoundException("Currency not found: " + to);
+            }
         } else {
-            logger.info("Cache is not valid, redoing exchange rates request");
+            try {
+                logger.info("Cache is not valid, requesting new exchange rates");
+                updateExchangeRates(from); // This method updates the cache with new rates
+                return exchange(from, to); // Recursive call to retry with updated rates
+            } catch (IOException e) {
+                throw new ExternalServiceException("Failed to retrieve exchange rates", e);
+            }
         }
+    }
 
-        String api_link = "https://v6.exchangerate-api.com/v6/" + apiKey + "/latest/" + from;
+    private void updateExchangeRates(String from) throws IOException, ExternalServiceException {
+        String apiLink = "https://v6.exchangerate-api.com/v6/" + apiKey + "/latest/" + from;
+        logger.info("Requesting exchange rates from API: " + apiKey);
+        logger.info("API link: " + apiLink);
 
-        String content = RequestAPI(api_link);
-
-        JSONObject obj = new JSONObject(content.toString());
-
-        storeExchangeRates(obj.getJSONObject("conversion_rates").toMap());
-
-        currencies = (List<String>) obj.getJSONObject("conversion_rates").keySet();
-
-        double rate;
-
+        String content;
         try {
-            rate = obj.getJSONObject("conversion_rates").getDouble(to);
+            content = RequestAPI(apiLink);
         } catch (Exception e) {
-            throw new Exception("Currency not found");
+            throw new ExternalServiceException("Error fetching exchange rates from API", e);
         }
 
-        return rate;
+        JSONObject obj = new JSONObject(content);
+        if (!obj.getString("result").equals("success"))
+            throw new ExternalServiceException("API did not return a successful response: " + obj.getString("error-type"));
 
+        JSONObject conversionRates = obj.getJSONObject("conversion_rates");
+        Map<String, Double> rates = new HashMap<>();
+        for (String key : conversionRates.keySet()) {
+            Double value = conversionRates.getDouble(key);
+            rates.put(key, value);
+        }
+
+        // Assuming 'cachedRates' is a Map<String, Map<String, Double>> to support different base currencies
+        cachedRates.put(from, rates);
+
+        // Update 'currencies' if necessary. This might be refactored depending on actual usage.
+        currencies = new ArrayList<>(rates.keySet());
+
+        lastCaching = System.currentTimeMillis(); // Update caching time
+        logger.info("Updated exchange rates cache for base currency: " + from);
     }
 }

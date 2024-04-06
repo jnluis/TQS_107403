@@ -40,6 +40,12 @@ public class TripController {
         return ResponseEntity.ok(tripService.listTrips(origin, destination, date, currency));
     }
 
+    @GetMapping("/currency")
+    public ResponseEntity<Trip> getTrip(@RequestParam int id, @RequestParam(required=false) String currency) {
+        logger.info("Trip " + id + " requested");
+        return ResponseEntity.ok(tripService.getTrip(id, currency));
+    }
+
     @GetMapping("/dates")
     public ResponseEntity<List<String>> getDates() {
         logger.info("Dates list requested");
