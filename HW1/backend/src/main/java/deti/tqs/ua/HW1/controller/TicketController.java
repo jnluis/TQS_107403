@@ -1,6 +1,7 @@
 package deti.tqs.ua.HW1.controller;
 
 import deti.tqs.ua.HW1.model.TicketDetails;
+import deti.tqs.ua.HW1.model.TicketTripInfoDTO;
 import deti.tqs.ua.HW1.model.Trip;
 import deti.tqs.ua.HW1.service.TicketService;
 import deti.tqs.ua.HW1.service.TripService;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -39,6 +41,7 @@ public class TicketController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
     })
     public ResponseEntity<TicketDetails> reserveTicket(@RequestBody TicketDetails ticket) {
+        logger.info("watthhh "+ ticket);
         logger.info("Requested ticket purchase for trip " + ticket.getTripID());
 
         if (!tripService.tripExists(ticket.getTripID())) {
@@ -57,9 +60,39 @@ public class TicketController {
 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trip not found");
         }
+
         TicketDetails t = ticketService.ReserveTicket(ticket);
 
         return ResponseEntity.ok(t);
-
     }
+
+    @GetMapping("/list")
+    @Operation(summary = "List of reserved tickets")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
+    public ResponseEntity<List<TicketTripInfoDTO>> listReservedTickets() {
+        List<TicketDetails> tickets = ticketService.findAllTickets();
+        List<TicketTripInfoDTO> ticketDTO = new ArrayList<>();
+
+        for (TicketDetails td : tickets) {
+            TicketTripInfoDTO ttiDTO = new TicketTripInfoDTO();
+            ttiDTO.setId(td.getId());
+            ttiDTO.setPrice(String.valueOf(tripService.getTrip(td.getTripID(), "EUR").getPrice()));
+            ttiDTO.setTripID(td.getTripID());
+            ttiDTO.setFirstName(td.getFirstName());
+            ttiDTO.setLastName(td.getLastName());
+            ttiDTO.setEmail(td.getEmail());
+            ttiDTO.setBusID(tripService.getTrip(td.getTripID(), "EUR").getId());
+            ttiDTO.setDate(tripService.getTrip(td.getTripID(), "EUR").getDate());
+            ttiDTO.setTime(tripService.getTrip(td.getTripID(), "EUR").getTime());
+            ttiDTO.setBusNumber(tripService.getTrip(td.getTripID(), "EUR").getBusNumber());
+            ttiDTO.setOrigin(tripService.getTrip(td.getTripID(), "EUR").getOrigin());
+            ttiDTO.setDestination(tripService.getTrip(td.getTripID(), "EUR").getDestination());
+            ticketDTO.add(ttiDTO);
+        }
+        return ResponseEntity.ok(ticketDTO);
+    }
+
 }

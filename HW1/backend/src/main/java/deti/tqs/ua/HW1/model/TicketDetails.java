@@ -1,5 +1,6 @@
 package deti.tqs.ua.HW1.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,8 +19,10 @@ public class TicketDetails {
     private String id;
     private int tripID; //it's a integer!
     private String price;
-    private String FirstName;
-    private String LastName;
+    @JsonProperty("FirstName")
+    private String firstName;
+    @JsonProperty("LastName")
+    private String lastName;
     private String city;
     private String email;
 

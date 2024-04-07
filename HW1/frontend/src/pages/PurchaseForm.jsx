@@ -3,7 +3,7 @@ function PurchaseForm() {
       <div className="max-w-md mx-auto p-6 rounded-md shadow-md">
         <form className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-semibold">
+            <label className="text-sm font-semibold">
               First Name
             </label>
             <input
@@ -11,21 +11,22 @@ function PurchaseForm() {
               name="FirstName"
               type="text"
               className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
+              required
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-semibold">
+            <label className="text-sm font-semibold">
               Last Name
             </label>
             <input
               id="LastName"
-              name="name"
+              name="LastName"
               type="text"
               className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-semibold">
+            <label className="text-sm font-semibold">
               City
             </label>
             <input
@@ -36,7 +37,7 @@ function PurchaseForm() {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-semibold">
+            <label className="text-sm font-semibold">
               Email
             </label>
             <input

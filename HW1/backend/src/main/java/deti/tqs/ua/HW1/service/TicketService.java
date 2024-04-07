@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Service
@@ -47,8 +48,4 @@ public class TicketService {
         logger.info("Ticket reserved");
         return ticket;
     }
-
-
-
-
 }

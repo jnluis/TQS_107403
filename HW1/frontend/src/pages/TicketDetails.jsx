@@ -64,10 +64,11 @@ function TicketDetails() {
     event.preventDefault();
 
     const formData = new FormData(document.querySelector("form"));
+    formData.append("tripID", id); // Append the id here
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/ticket/reserve/${ticket.id}`,
+        `http://localhost:8080/api/ticket/reserve`,
         {
           method: "POST",
           headers: {
@@ -86,7 +87,7 @@ function TicketDetails() {
       console.error("Erro:", error);
     }
 
-    window.location.href = "/purchaseDetails";
+    //window.location.href = "/confirmation"; // Redirect to the purchase details page
   };
 
   return (
