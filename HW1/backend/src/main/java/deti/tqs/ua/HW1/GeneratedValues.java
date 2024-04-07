@@ -88,7 +88,7 @@ public class GeneratedValues implements ApplicationRunner {
         trip9.setBusNumber("1L");
         trip9.setOrigin("Lisboa");
         trip9.setDestination("Porto");
-        trip9.setDate("2024-04-01");
+        trip9.setDate("2024-04-04");
         trip9.setTime("10:30");
         trip9.setPrice(15.0);
 

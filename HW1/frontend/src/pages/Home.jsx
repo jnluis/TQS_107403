@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Home = () => {
@@ -8,24 +8,23 @@ const Home = () => {
     // States for dropdown options
     const [origins, setOrigins] = useState([]);
     const [destinations, setDestinations] = useState([]);
-    //const [currencies, setCurrencies] = useState([]);
+    const [currencies, setCurrencies] = useState([]);
     
-    const currencies = ['USD', 'EUR', 'GBP']; // STATIC CURRENCIES FOR NOW
-
   const [formData, setFormData] = useState({
     origin: '',
     destination: '',
     date: '',
-    passengerName: '',
-    passengerEmail: '',
     currency:'',
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Process or send the data as needed
-    navigate('/trip');
+  
+    // Using createSearchParams to generate query parameters
+    navigate({
+      pathname: '/trips',
+      search: `?${createSearchParams(formData)}`,
+    });
   };
 
   const handleChange = (e) => {
@@ -36,27 +35,17 @@ const Home = () => {
     }));
   };
 
-    // Fetch data for dropdowns
-    useEffect(() => {
-      const fetchOrigins = async () => {
-        const response = await axios.get('http://localhost:8080/api/trips/origins');
-        setOrigins(response.data);
-      };
-  
-      const fetchDestinations = async () => {
-        const response = await axios.get('http://localhost:8080/api/trips/destinations');
-        setDestinations(response.data);
-      };
+  // Fetch data for dropdowns
+  useEffect(() => {
+    const fetchData = async (endpoint, setState) => {
+      const response = await axios.get(`http://localhost:8080/api/${endpoint}`);
+      setState(response.data);
+    };
 
-      const fetchCurrencies = async () => {
-        const response = await axios.get('http://localhost:8080/api/');
-        setDestinations(response.data);
-      };
-    
-      fetchOrigins();
-      fetchDestinations();
-    }, []);
-
+    fetchData('trips/origins', setOrigins);
+    fetchData('trips/destinations', setDestinations);
+    fetchData('currencies/list', setCurrencies);
+  }, []);
   return (
     <>
       <div className="ml-[700px] mt-[-150px] p-5 card bg-base-100 shadow-xl">

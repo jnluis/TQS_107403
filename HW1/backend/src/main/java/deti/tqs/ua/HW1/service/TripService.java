@@ -44,7 +44,7 @@ public class TripService {
         for (Trip trip : trips) {
             trip.setPrice(trip.getPrice() * exchange_rate); // convert price to new currency in all trips
         }
-        logger.info("Trips list requested ");
+        logger.info("Trips list requested inside TripService");
 
         return trips;
     }

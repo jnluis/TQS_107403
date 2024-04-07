@@ -27,7 +27,7 @@ public class TripController {
     private TripService tripService;
 
     @GetMapping("/list")
-    @Operation(summary = "Get all types of grapes")
+    @Operation(summary = "Get all trips")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
