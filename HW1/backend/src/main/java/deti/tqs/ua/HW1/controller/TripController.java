@@ -40,8 +40,8 @@ public class TripController {
         return ResponseEntity.ok(tripService.listTrips(origin, destination, date, currency));
     }
 
-    @GetMapping("/currency")
-    public ResponseEntity<Trip> getTrip(@RequestParam int id, @RequestParam(required=false) String currency) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Trip> getTrip(@PathVariable int id, @RequestParam(required=false) String currency) {
         logger.info("Trip " + id + " requested");
         return ResponseEntity.ok(tripService.getTrip(id, currency));
     }

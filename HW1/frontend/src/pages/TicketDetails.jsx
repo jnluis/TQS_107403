@@ -1,85 +1,60 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams,useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+
 
 import PurchaseForm from "./PurchaseForm";
 
 function TicketDetails() {
   const navigate = useNavigate();
+  const { id } = useParams(); // Extracting ID from the URL
   const [ticket, setTicket] = useState(null);
   const [departureDay, setDepartureDay] = useState(null);
   const [departureTime, setDepartureTime] = useState(null);
   const [eurPrice, setEurPrice] = useState(null);
   const [price, setPrice] = useState(null);
+  const [BusNumber, setBusNumber] = useState(null);
   const [currencySelected, setCurrencySelected] = useState("EUR");
 
-  const mockTicket = {
-    id: "123",
-    origin: "City A",
-    destination: "City B",
-    departureDay: "2024-04-01",
-    departure_time: "08:00:00",
-    price: 100,
-    BusNumber: "1",
+  const fetchTicketDetails = async () => {
+    try {
+      const intId = parseInt(id, 10); // The '10' is the radix parameter, indicating base 10 (decimal system).
+
+      // Check if 'intId' is a valid number after conversion. If not, handle it as an error or set a default behavior.
+      if (isNaN(intId)) {
+        console.error("Invalid ticket ID");
+        setTicket(null);
+        return;
+      }
+
+      const response = await axios.get(`http://localhost:8080/api/trips/${intId}`);
+      if (response.status === 200) {
+        console.log("Ticket found", response.data);
+        setTicket(response.data);
+      } else {
+        console.error("Ticket not found");
+        setTicket(null);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setTicket(null);
+    }
   };
 
+  useEffect(() => {
+    fetchTicketDetails();
+    setCurrencySelected(localStorage.getItem("currency") || "EUR");
+  }, [id]);
 
   const goBack = () => {
     navigate(-1);
   }
 
   useEffect(() => {
-    // Simulating fetching data by directly setting mock data
-    setTicket(mockTicket);
-    setCurrencySelected(localStorage.getItem("currency") || "EUR");
-  }, []);
-
-  // const fetchTicket = async (url) => {
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: "GET",
-  //     });
-
-  //     const responseContent = await response.json();
-  //     if (response.status === 200) {
-  //       console.log("Ticket found");
-  //       setTicket(responseContent);
-  //     } else if (response.status === 404) {
-  //       console.error("Ticket not found");
-  //       setTicket(null);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     setTicket(null);
-  //   }
-  // };
-
-  // const fetchPrice = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8080/api/currency/price?currencyTo=${currencySelected}&amount=${eurPrice}`,
-  //       {
-  //         method: "GET",
-  //       }
-  //     );
-
-  //     const responseContent = await response.json();
-  //     if (response.status === 200) {
-  //       console.log("Price found");
-  //       setPrice(responseContent);
-  //     } else if (response.status === 404) {
-  //       console.error("Price not found");
-  //       return null;
-  //     }
-  //   } catch (error) {
-  //     console.error("Erro:", error);
-  //     return null;
-  //   }
-  // };
-
-  useEffect(() => {
     if (ticket) {
-      setDepartureDay(ticket.departureDay);
-      setDepartureTime(ticket.departure_time);
+      setDepartureDay(ticket.date);
+      setDepartureTime(ticket.time);
+      setBusNumber(ticket.busNumber); 
       setEurPrice(ticket.price);
       setPrice(ticket.price);
     }
@@ -88,65 +63,32 @@ function TicketDetails() {
   const submitForm = async (event) => {
     event.preventDefault();
 
-    // const formData = new FormData(document.querySelector("form"));
-    console.log("Submitting form with mock data");
+    const formData = new FormData(document.querySelector("form"));
 
-    // try {
-    //   const response = await fetch(
-    //     `http://localhost:8080/api/reservation/reserve/${ticket.id}`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(Object.fromEntries(formData)),
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/ticket/reserve/${ticket.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        }
+      );
 
-    //   if (response.status === 200) {
-    //     console.log("Reservation created");
-    //   } else if (response.status === 404) {
-    //     console.error("Reservation not created");
-    //   }
-    // } catch (error) {
-    //   console.error("Erro:", error);
-    // }
+      if (response.status === 200) {
+        console.log("Reservation created");
+      } else if (response.status === 404) {
+        console.error("Reservation not created");
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+    }
 
-    // window.location.href = "/purchaseDetails";
+    window.location.href = "/purchaseDetails";
   };
 
-  // useEffect(() => {
-  //   const urlParts = window.location.pathname.split("/");
-  //   const id = urlParts[urlParts.length - 1];
-
-  //   const ticketUrl = `http://localhost:8080/api/tickets/${id}`;
-  //   fetchTicket(ticketUrl);
-
-  //   setCurrencySelected(localStorage.getItem("currency"));
-  // }, []);
-
-  // useEffect(() => {
-  //   if (ticket) {
-  //     const departureDate = new Date(ticket.departure_time);
-  //     const departureTime = departureDate.toLocaleTimeString("pt-PT");
-  //     const departureDay = departureDate.toLocaleDateString("pt-PT");
-
-  //     const arrivalDate = new Date(ticket.arrival_time);
-  //     const arrivalTime = arrivalDate.toLocaleTimeString("pt-PT");
-
-  //     const ticketPrice = ticket.price;
-
-  //     setDepartureDay(departureDay);
-  //     setDepartureTime(departureTime);
-  //     setArrivalTime(arrivalTime);
-  //     setEurPrice(ticketPrice);
-  //     setPrice(ticketPrice);
-
-  //     // if (currencySelected !== "EUR") {
-  //     //   fetchPrice();
-  //     // }
-  //   }
-  // }, [ticket, eurPrice, currencySelected]);
   return (
     <div className="flex flex-row ml-10">
       <div className="flex-1">
@@ -184,7 +126,7 @@ function TicketDetails() {
                               Bus Number
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                              {ticket.BusNumber}
+                            {BusNumber}
                             </td>
                           </tr>
                           <tr>

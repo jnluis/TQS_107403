@@ -11,8 +11,8 @@ function Trip() {
     navigate(-1);
   }
 
-  const goTicketDetails = () => {
-    navigate("/reserve");
+  const goTicketDetails = (id) => {
+    navigate(`/reserve/${id}`);
   }
 
   useEffect(() => {
@@ -60,9 +60,9 @@ function Trip() {
           <tbody>
             {trips.map((trip, index) => (
               <tr key={index} className="hover:bg-secondary">
-                <td><button className="btn btn-primary btn-sm" onClick={goTicketDetails}>Choose This Bus</button></td>
-                <td>{trip.origin}</td>
+                <td><button className="btn btn-primary btn-sm" onClick={() => goTicketDetails(trip.id)}>Choose This Bus</button></td>
                 <td>{trip.busNumber}</td>
+                <td>{trip.origin}</td>
                 <td>{trip.destination}</td>
                 <td>{trip.date}</td>
                 <td>{trip.time}</td>
