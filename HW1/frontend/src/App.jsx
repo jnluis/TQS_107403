@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MissingPage from "./pages/MissingPage";
 import Home from "./pages/Home";
 import Trip from "./pages/Trips";
+import TicketDetails from "./pages/TicketDetails";
 
 
 function App() {
@@ -11,8 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/trips" element={<Trip />} />
-        {/* <Route path="/dissertacoes/:id" element={<DissertationsDetails />} />
-        <Route path="/perfil" element={<Profile />} /> */}
+        <Route path="reserve" element={<TicketDetails />} />
 
         <Route path="*" element={<MissingPage />} />
       </Routes>

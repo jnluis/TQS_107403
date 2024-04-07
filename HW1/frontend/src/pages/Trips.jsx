@@ -11,6 +11,10 @@ function Trip() {
     navigate(-1);
   }
 
+  const goTicketDetails = () => {
+    navigate("/reserve");
+  }
+
   useEffect(() => {
     // The advantage here is direct integration with react-router-dom's hook
     const origin = searchParams.get('origin');
@@ -56,7 +60,7 @@ function Trip() {
           <tbody>
             {trips.map((trip, index) => (
               <tr key={index} className="hover:bg-secondary">
-                <td><button className="btn btn-primary btn-sm">Choose This Bus</button></td>
+                <td><button className="btn btn-primary btn-sm" onClick={goTicketDetails}>Choose This Bus</button></td>
                 <td>{trip.origin}</td>
                 <td>{trip.busNumber}</td>
                 <td>{trip.destination}</td>
