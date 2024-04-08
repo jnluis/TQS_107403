@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams,useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 function Trip() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [trips, setTrips] = useState([]); // State to store fetched trips
+  const currency = searchParams.get('currency');
 
   const goBack = () => {
     navigate(-1);
   }
 
-  const goTicketDetails = (id) => {
-    navigate(`/reserve/${id}`);
+  const goTicketDetails = (id, price, currency) => {
+    console.log('id', currency);
+    navigate(`/reserve/${id}`, { state: { price, currency } });
   }
 
   useEffect(() => {
@@ -60,7 +62,7 @@ function Trip() {
           <tbody>
             {trips.map((trip, index) => (
               <tr key={index} className="hover:bg-secondary">
-                <td><button className="btn btn-primary btn-sm" onClick={() => goTicketDetails(trip.id)}>Choose This Bus</button></td>
+                <td><button className="btn btn-primary btn-sm" onClick={() => goTicketDetails(trip.id, trip.price, currency)}>Choose This Bus</button></td>
                 <td>{trip.busNumber}</td>
                 <td>{trip.origin}</td>
                 <td>{trip.destination}</td>

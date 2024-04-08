@@ -5,12 +5,31 @@ function Confirmation() {
   const [departureDay, setDepartureDay] = useState(null);
   const [departureTime, setDepartureTime] = useState(null);
   const [arrivalTime, setArrivalTime] = useState(null);
-  const [name, setName] = useState(null);
+  const [firstName, setfirstName] = useState(null);
+  const [lastName, setlastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [ccnumber, setCcnumber] = useState(null);
 
+    // Mock data to simulate API response
+    const mockTicket = {
+      origin: "New York",
+      destination: "Los Angeles",
+      date: "2024-04-15",
+      time: "17:30",
+      busNumber: "15",
+    };
+  
+    const mockReservation = {
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      cc_number: "1234-5678-9012-3456",
+      ticketId: mockTicket.ticketId,
+    };
+
   const fetchTicket = async (url) => {
     console.log("fetching ticket");
+    setTicket(mockTicket);
     // try {
     //   const response = await fetch(url, {
     //     method: "GET",
@@ -32,6 +51,11 @@ function Confirmation() {
 
   const fetchReservation = async () => {
     console.log("fetching reservation");
+    setfirstName(mockReservation.firstName);
+    setlastName(mockReservation.lastName);
+    setEmail(mockReservation.email);
+    setCcnumber(mockReservation.cc_number);
+    fetchTicket();
     // try {
     //   const response = await fetch(
     //     "http://localhost:8080/api/reservation/last_id",
@@ -65,15 +89,9 @@ function Confirmation() {
 
   useEffect(() => {
     if (ticket) {
-      const departureDate = new Date(ticket.departure_time);
-      const departureTime = departureDate.toLocaleTimeString("pt-PT");
-      const departureDay = departureDate.toLocaleDateString("pt-PT");
 
-      const arrivalDate = new Date(ticket.arrival_time);
-      const arrivalTime = arrivalDate.toLocaleTimeString("pt-PT");
-
-      setDepartureDay(departureDay);
-      setDepartureTime(departureTime);
+      setDepartureDay(ticket.date);
+      setDepartureTime(ticket.time);
       setArrivalTime(arrivalTime);
     }
   }, [ticket]);
@@ -82,72 +100,68 @@ function Confirmation() {
 
       <div className="flex-1">
         {ticket && (
-          <div className="max-w-lg mx-auto mt-8 p-8 bg-white rounded-md shadow-md">
-            <h1 className="text-2xl font-semibold text-center mb-4">
-              Ticket Details
+          <div className="max-w-lg mx-auto mt-8 p-8 rounded-md">
+            <h1 className="text-4xl font-semibold text-center mb-8 text-nowrap">
+            Thank you for your purchase today!
             </h1>
             <div className=" gap-4">
-              <table className="table-auto mx-auto border-collapse border border-gray-400">
+              <table className="table-auto mx-auto ">
+                <tbody>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
+                  <td className="px-4 py-2 font-bold">
                     Origin:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">
+                  <td className=" px-4 py-2">
                     {ticket.origin}
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
+                  <td className="px-4 py-2 font-bold">
                     Destination:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">
+                  <td className="px-4 py-2">
                     {ticket.destination}
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
-                    Departure Time:
+                  <td className="px-4 py-2 font-bold">
+                    Date:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">
-                    {departureDay} at {departureTime}
+                  <td className="px-4 py-2">
+                    {departureDay} 
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
+                  <td className="px-4 py-2 font-bold">
                     Arrival Time:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">
-                    {arrivalTime}
+                  <td className="px-4 py-2">
+                  {departureTime}
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
-                    Company:
+                  <td className="px-4 py-2 font-bold">
+                    Bus Number:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">
-                    {ticket.company}
+                  <td className="px-4 py-2">
+                    {ticket.busNumber}
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
+                  <td className="px-4 py-2 font-bold">
                     Name:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">{name}</td>
+                  <td className="px-4 py-2">{firstName} {lastName}</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
+                  <td className="px-4 py-2 font-bold">
                     Email:
                   </td>
-                  <td className="border border-gray-400 px-4 py-2">{email}</td>
+                  <td className="px-4 py-2">{email}</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 px-4 py-2 font-bold">
-                    CC Number:
-                  </td>
-                  <td className="border border-gray-400 px-4 py-2">
-                    {ccnumber}
-                  </td>
                 </tr>
+                </tbody>
               </table>
             </div>
           </div>

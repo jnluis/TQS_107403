@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams,useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams,useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -8,13 +8,16 @@ import PurchaseForm from "./PurchaseForm";
 function TicketDetails() {
   const navigate = useNavigate();
   const { id } = useParams(); // Extracting ID from the URL
+  const location = useLocation();
+  const { currency, price } = location.state || { currency: 'EUR', price: null }; // Provide default values if state is undefined
+
   const [ticket, setTicket] = useState(null);
   const [departureDay, setDepartureDay] = useState(null);
   const [departureTime, setDepartureTime] = useState(null);
-  const [eurPrice, setEurPrice] = useState(null);
-  const [price, setPrice] = useState(null);
+  const [eurPrice, setEurPrice] = useState(price);
   const [BusNumber, setBusNumber] = useState(null);
-  const [currencySelected, setCurrencySelected] = useState("EUR");
+  const [currencySelected, setCurrencySelected] = useState(currency);
+  
 
   const fetchTicketDetails = async () => {
     try {
@@ -29,7 +32,6 @@ function TicketDetails() {
 
       const response = await axios.get(`http://localhost:8080/api/trips/${intId}`);
       if (response.status === 200) {
-        console.log("Ticket found", response.data);
         setTicket(response.data);
       } else {
         console.error("Ticket not found");
@@ -43,7 +45,6 @@ function TicketDetails() {
 
   useEffect(() => {
     fetchTicketDetails();
-    setCurrencySelected(localStorage.getItem("currency") || "EUR");
   }, [id]);
 
   const goBack = () => {
@@ -56,7 +57,6 @@ function TicketDetails() {
       setDepartureTime(ticket.time);
       setBusNumber(ticket.busNumber); 
       setEurPrice(ticket.price);
-      setPrice(ticket.price);
     }
   }, [ticket]);
 
@@ -87,7 +87,7 @@ function TicketDetails() {
       console.error("Erro:", error);
     }
 
-    //window.location.href = "/confirmation"; // Redirect to the purchase details page
+    window.location.href = "/confirmation"; // Redirect to the confirmation page
   };
 
   return (
