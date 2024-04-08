@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 
 function Confirmation() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [ticket, setTicket] = useState(null);
   const [departureDay, setDepartureDay] = useState(null);
   const [departureTime, setDepartureTime] = useState(null);
@@ -8,162 +11,120 @@ function Confirmation() {
   const [firstName, setfirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [ccnumber, setCcnumber] = useState(null);
+  const { price, currency } = location.state;
 
-    // Mock data to simulate API response
-    const mockTicket = {
-      origin: "New York",
-      destination: "Los Angeles",
-      date: "2024-04-15",
-      time: "17:30",
-      busNumber: "15",
-    };
-  
-    const mockReservation = {
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      cc_number: "1234-5678-9012-3456",
-      ticketId: mockTicket.ticketId,
-    };
+  const fetchTickets = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/ticket/list', {
+        method: 'GET',
+      });
+      const tickets = await response.json();
 
-  const fetchTicket = async (url) => {
-    console.log("fetching ticket");
-    setTicket(mockTicket);
-    // try {
-    //   const response = await fetch(url, {
-    //     method: "GET",
-    //   });
-
-    //   const responseContent = await response.json();
-    //   if (response.status === 200) {
-    //     console.log("Ticket found");
-    //     setTicket(responseContent);
-    //   } else if (response.status === 404) {
-    //     console.error("Ticket not found");
-    //     setTicket(null);
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   setTicket(null);
-    // }
+      if (response.ok) {
+        // Assuming the tickets array is not empty and you want the first ticket
+        if (tickets.length > 0) {
+          const latestTicket = tickets[0]; // Change this logic based on how you select a ticket
+          setTicket(latestTicket);
+          // Here you would also fetch reservation details if they're separate or set them if included in the ticket response
+        }
+      } else {
+        console.error("Error fetching tickets:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+    }
   };
 
-  const fetchReservation = async () => {
-    console.log("fetching reservation");
-    setfirstName(mockReservation.firstName);
-    setlastName(mockReservation.lastName);
-    setEmail(mockReservation.email);
-    setCcnumber(mockReservation.cc_number);
-    fetchTicket();
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:8080/api/reservation/last_id",
-    //     {
-    //       method: "GET",
-    //     }
-    //   );
-
-    //   const responseContent = await response.json();
-    //   if (response.status === 200) {
-    //     console.log("Ticket found");
-    //     setName(responseContent.name);
-    //     setEmail(responseContent.email);
-    //     setCcnumber(responseContent.cc_number);
-    //     fetchTicket(
-    //       `http://localhost:8080/api/tickets/${responseContent.ticketId}`
-    //     );
-    //   } else if (response.status === 404) {
-    //     console.error("Ticket not found");
-    //     setTicket(null);
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   setTicket(null);
-    // }
-  };
+  const goFirstPage = () => {
+    navigate('/');
+  }
 
   useEffect(() => {
-    fetchReservation();
+    fetchTickets();
   }, []);
 
   useEffect(() => {
     if (ticket) {
-
+      setfirstName(ticket.firstName);
+      setlastName(ticket.lastName);
+      setEmail(ticket.email);
       setDepartureDay(ticket.date);
       setDepartureTime(ticket.time);
-      setArrivalTime(arrivalTime);
     }
   }, [ticket]);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ml-[550px]">
 
       <div className="flex-1">
         {ticket && (
           <div className="max-w-lg mx-auto mt-8 p-8 rounded-md">
             <h1 className="text-4xl font-semibold text-center mb-8 text-nowrap">
-            Thank you for your purchase today!
+              Thank you for your purchase today!
             </h1>
             <div className=" gap-4">
               <table className="table-auto mx-auto ">
                 <tbody>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Origin:
-                  </td>
-                  <td className=" px-4 py-2">
-                    {ticket.origin}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Destination:
-                  </td>
-                  <td className="px-4 py-2">
-                    {ticket.destination}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Date:
-                  </td>
-                  <td className="px-4 py-2">
-                    {departureDay} 
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Arrival Time:
-                  </td>
-                  <td className="px-4 py-2">
-                  {departureTime}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Bus Number:
-                  </td>
-                  <td className="px-4 py-2">
-                    {ticket.busNumber}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Name:
-                  </td>
-                  <td className="px-4 py-2">{firstName} {lastName}</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold">
-                    Email:
-                  </td>
-                  <td className="px-4 py-2">{email}</td>
-                </tr>
-                <tr>
-                </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Origin:
+                    </td>
+                    <td className=" px-4 py-2">
+                      {ticket.origin}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Destination:
+                    </td>
+                    <td className="px-4 py-2">
+                      {ticket.destination}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Date:
+                    </td>
+                    <td className="px-4 py-2">
+                      {departureDay}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Time:
+                    </td>
+                    <td className="px-4 py-2">
+                      {departureTime}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Bus Number:
+                    </td>
+                    <td className="px-4 py-2">
+                      {ticket.busNumber}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Name:
+                    </td>
+                    <td className="px-4 py-2">{firstName} {lastName}</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-bold">
+                      Email:
+                    </td>
+                    <td className="px-4 py-2">{email}</td>
+                  </tr>
+                  <tr>
+                  </tr>
                 </tbody>
               </table>
+              <div className="text-xl text-center mt-6">
+              You payed {price} {currency}
+              </div>
             </div>
+            <button className="btn btn-secondary mt-4" onClick={goFirstPage}>Home</button>
           </div>
         )}
       </div>

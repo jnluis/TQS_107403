@@ -13,7 +13,6 @@ function Trip() {
   }
 
   const goTicketDetails = (id, price, currency) => {
-    console.log('id', currency);
     navigate(`/reserve/${id}`, { state: { price, currency } });
   }
 

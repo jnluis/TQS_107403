@@ -80,6 +80,7 @@ function TicketDetails() {
 
       if (response.status === 200) {
         console.log("Reservation created");
+        navigate('/confirmation', { state: { price: price, currency: currencySelected } });
       } else if (response.status === 404) {
         console.error("Reservation not created");
       }
@@ -87,11 +88,10 @@ function TicketDetails() {
       console.error("Erro:", error);
     }
 
-    window.location.href = "/confirmation"; // Redirect to the confirmation page
   };
 
   return (
-    <div className="flex flex-row ml-10">
+    <div className="flex flex-row ml-[500px]">
       <div className="flex-1">
         {ticket && (
           <div>
