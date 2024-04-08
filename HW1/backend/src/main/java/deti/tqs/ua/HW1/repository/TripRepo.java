@@ -23,4 +23,6 @@ public interface TripRepo extends JpaRepository<Trip, Integer> {
     List<String> findDestinations();
 
     Trip findById(int id);
+
+    Trip findByPrice(double price);
 }

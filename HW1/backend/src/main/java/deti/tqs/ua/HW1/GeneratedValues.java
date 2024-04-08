@@ -100,6 +100,46 @@ public class GeneratedValues implements ApplicationRunner {
         trip10.setTime("20:30");
         trip10.setPrice(15.0);
 
+        Trip trip11 = new Trip();
+        trip11.setBusNumber("12");
+        trip11.setOrigin("Viseu");
+        trip11.setDestination("Aveiro");
+        trip11.setDate("2024-04-02");
+        trip11.setTime("12:00");
+        trip11.setPrice(3.50);
+
+        Trip trip12 = new Trip();
+        trip12.setBusNumber("B12");
+        trip12.setOrigin("Braganca");
+        trip12.setDestination("Aveiro");
+        trip12.setDate("2024-04-03");
+        trip12.setTime("18:00");
+        trip12.setPrice(12.50);
+
+        Trip trip13 = new Trip();
+        trip13.setBusNumber("30C");
+        trip13.setOrigin("Lisboa");
+        trip13.setDestination("Braganca");
+        trip13.setDate("2024-04-03");
+        trip13.setTime("14:00");
+        trip13.setPrice(15.00);
+
+        Trip trip14 = new Trip();
+        trip14.setBusNumber("457");
+        trip14.setOrigin("Leiria");
+        trip14.setDestination("Viseu");
+        trip14.setDate("2024-04-04");
+        trip14.setTime("11:00");
+        trip14.setPrice(5.99);
+
+        Trip trip15 = new Trip();
+        trip15.setBusNumber("4P");
+        trip15.setOrigin("Porto");
+        trip15.setDestination("Coimbra");
+        trip15.setDate("2024-04-04");
+        trip15.setTime("17:00");
+        trip15.setPrice(7.00);
+
         tripRepo.save(trip1);
         tripRepo.save(trip2);
         tripRepo.save(trip3);
@@ -110,5 +150,10 @@ public class GeneratedValues implements ApplicationRunner {
         tripRepo.save(trip8);
         tripRepo.save(trip9);
         tripRepo.save(trip10);
+        tripRepo.save(trip11);
+        tripRepo.save(trip12);
+        tripRepo.save(trip13);
+        tripRepo.save(trip14);
+        tripRepo.save(trip15);
     }
 }

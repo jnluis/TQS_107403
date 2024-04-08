@@ -27,7 +27,7 @@ public class CurrExchangeService {
     Map<String, Object> cachedRates = new HashMap<>();
     private long lastCaching = 0;
     private int cacheTTL = 3600 * 100;
-    private String apiKey;
+    private final String apiKey;
 
     //@Autowired
     public CurrExchangeService () {
@@ -36,6 +36,8 @@ public class CurrExchangeService {
     }
 
     public CurrExchangeService(int TTL) {
+        Dotenv dotenv = Dotenv.load();
+        this.apiKey = dotenv.get("EXCHANGE_RATE_API_KEY");
         cacheTTL = TTL;
         cachedRates = new HashMap<>();
     }
@@ -119,8 +121,6 @@ public class CurrExchangeService {
 
     private void updateExchangeRates(String from) throws IOException, ExternalServiceException {
         String apiLink = "https://v6.exchangerate-api.com/v6/" + apiKey + "/latest/" + from;
-        logger.info("Requesting exchange rates from API: " + apiKey);
-        logger.info("API link: " + apiLink);
 
         String content;
         try {
