@@ -20,8 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-@CrossOrigin("*")
 @RestController
 @RequestMapping(path = "/api/ticket")
 @Tag(name = "Trip", description = "Operations for tickets")

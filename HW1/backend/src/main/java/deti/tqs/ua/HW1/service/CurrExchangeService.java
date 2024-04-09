@@ -146,6 +146,5 @@ public class CurrExchangeService {
         currencies = new ArrayList<>(rates.keySet());
 
         lastCaching = System.currentTimeMillis(); // Update caching time
-        logger.info("Updated exchange rates cache for base currency: " + from);
     }
 }
