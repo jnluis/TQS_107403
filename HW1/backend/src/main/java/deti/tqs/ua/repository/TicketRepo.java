@@ -1,7 +1,7 @@
-package deti.tqs.ua.HW1.repository;
+package deti.tqs.ua.repository;
 
 import java.util.List;
-import deti.tqs.ua.HW1.model.TicketDetails;
+import deti.tqs.ua.model.TicketDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

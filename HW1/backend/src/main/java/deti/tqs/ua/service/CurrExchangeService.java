@@ -1,9 +1,10 @@
-package deti.tqs.ua.HW1.service;
+package deti.tqs.ua.service;
 
-import deti.tqs.ua.HW1.exception.CurrencyNotFoundException;
-import deti.tqs.ua.HW1.exception.ExternalServiceException;
+import deti.tqs.ua.exception.CurrencyNotFoundException;
+import deti.tqs.ua.exception.ExternalServiceException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,23 +29,24 @@ public class CurrExchangeService {
     private int cacheTTL = 3600 * 100;
     private final String apiKey;
 
+    @Autowired
     public CurrExchangeService () {
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("EXCHANGE_RATE_API_KEY");
         cachedRates = new HashMap<>();
     }
 
-    public CurrExchangeService(int TTL) {
+    public CurrExchangeService(int tTL) {
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("EXCHANGE_RATE_API_KEY");
-        cacheTTL = TTL;
+        cacheTTL = tTL;
         cachedRates = new HashMap<>();
     }
 
     public boolean storeExchangeRates(Map<String, Object> rates) {
         cachedRates = rates;
         lastCaching = System.currentTimeMillis(); // in ms
-        logger.info("Caching exchange rates at " + lastCaching + " for " + cacheTTL + " milliseconds" );
+        logger.info("Caching exchange rates at {} for {} milliseconds",lastCaching, cacheTTL);
         return true;
     }
 
@@ -112,13 +114,13 @@ public class CurrExchangeService {
                 logger.info("Cache is not valid, requesting new exchange rates");
                 updateExchangeRates(from); // This method updates the cache with new rates
                 return exchange(from, to); // Recursive call to retry with updated rates
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new ExternalServiceException("Failed to retrieve exchange rates", e);
             }
         }
     }
 
-    private void updateExchangeRates(String from) throws IOException, ExternalServiceException {
+    private void updateExchangeRates(String from) throws ExternalServiceException {
         String apiLink = "https://v6.exchangerate-api.com/v6/" + apiKey + "/latest/" + from;
         List<String> allowedhosts = new ArrayList<>();
         String content = null;

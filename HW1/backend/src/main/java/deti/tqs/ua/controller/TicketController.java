@@ -1,10 +1,10 @@
-package deti.tqs.ua.HW1.controller;
+package deti.tqs.ua.controller;
 
-import deti.tqs.ua.HW1.model.TicketDetails;
-import deti.tqs.ua.HW1.model.TicketTripInfoDTO;
-import deti.tqs.ua.HW1.model.Trip;
-import deti.tqs.ua.HW1.service.TicketService;
-import deti.tqs.ua.HW1.service.TripService;
+import deti.tqs.ua.model.TicketDetails;
+import deti.tqs.ua.model.TicketTripInfoDTO;
+import deti.tqs.ua.model.Trip;
+import deti.tqs.ua.service.TicketService;
+import deti.tqs.ua.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,13 +24,17 @@ import java.util.List;
 @RequestMapping(path = "/api/ticket")
 @Tag(name = "Ticket", description = "Operations for tickets")
 public class TicketController {
-    private static final Logger logger = LoggerFactory.getLogger(TripController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TicketController.class);
+
+    private final TicketService ticketService;
+
+    private final TripService tripService;
 
     @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private TripService tripService;
+    public TicketController(TicketService ticketService, TripService tripService) {
+        this.ticketService = ticketService;
+        this.tripService = tripService;
+    }
 
     @PostMapping("/reserve")
     @Operation(summary = "Reserve a ticket")
@@ -58,7 +62,7 @@ public class TicketController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trip not found");
         }
 
-        TicketDetails t = ticketService.ReserveTicket(ticket);
+        TicketDetails t = ticketService.reserveTicket(ticket);
 
         return ResponseEntity.ok(t);
     }

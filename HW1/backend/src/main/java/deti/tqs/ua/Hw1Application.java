@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1;
+package deti.tqs.ua;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

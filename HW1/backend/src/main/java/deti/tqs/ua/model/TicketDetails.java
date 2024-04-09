@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1.model;
+package deti.tqs.ua.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
-package deti.tqs.ua.HW1.RepositoryTests;
+package deti.tqs.ua.RepositoryTests;
 
-import deti.tqs.ua.HW1.model.TicketDetails;
-import deti.tqs.ua.HW1.repository.TicketRepo;
+import deti.tqs.ua.model.TicketDetails;
+import deti.tqs.ua.repository.TicketRepo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class TicketRepoTests {
+class TicketRepoTests {
     @Autowired
     private TicketRepo ticketRepo;
 
@@ -80,9 +80,15 @@ public class TicketRepoTests {
     public void testDeleteByTripID_nonExistingTripID_doesNothing() {
         // Given there are no tickets in the database with a specific trip ID
         int nonExistingTripID = 25;
+        // Count all tickets in the database before the operation
+        long ticketCountBeforeDeletion = ticketRepo.count();
 
         // When the deleteByTripID method is called with the non-existing trip ID
         ticketRepo.deleteByTripID(nonExistingTripID);
+
+        // Count of tickets remains unchanged, implying no action was taken
+        long ticketCountAfterDeletion = ticketRepo.count();
+        assertEquals(ticketCountBeforeDeletion, ticketCountAfterDeletion, "The count of tickets in the repository should remain unchanged.");
     }
 }
 

@@ -1,8 +1,8 @@
-package deti.tqs.ua.HW1.ControllerTests;
+package deti.tqs.ua.ControllerTests;
 
-import deti.tqs.ua.HW1.controller.TripController;
-import deti.tqs.ua.HW1.model.Trip;
-import deti.tqs.ua.HW1.service.TripService;
+import deti.tqs.ua.controller.TripController;
+import deti.tqs.ua.model.Trip;
+import deti.tqs.ua.service.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = TripController.class,properties="spring.profiles.active=test")
-public class TripControllerTest {
+class TripControllerTest {
 
     @Autowired
     private MockMvc mvc;

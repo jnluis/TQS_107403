@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1.model;
+package deti.tqs.ua.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ public class TicketTripInfoDTO {
     private String destination;
     private String date;
     private String time;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     private String email;
 }

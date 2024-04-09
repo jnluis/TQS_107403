@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1.model;
+package deti.tqs.ua.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Let JPA generate ID
     private int id;
 
-    private String BusNumber;
+    private String busNumber;
     private String origin;
     private String destination;
     private String date;

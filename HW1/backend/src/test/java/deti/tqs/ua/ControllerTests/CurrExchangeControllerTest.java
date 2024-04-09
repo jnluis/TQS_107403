@@ -1,7 +1,7 @@
-package deti.tqs.ua.HW1.ControllerTests;
+package deti.tqs.ua.ControllerTests;
 
-import deti.tqs.ua.HW1.controller.CurrExchangeController;
-import deti.tqs.ua.HW1.service.CurrExchangeService;
+import deti.tqs.ua.controller.CurrExchangeController;
+import deti.tqs.ua.service.CurrExchangeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = CurrExchangeController.class,properties="spring.profiles.active=test")
-public class CurrExchangeControllerTest {
+class CurrExchangeControllerTest {
 
     @Autowired
     private MockMvc mvc;

@@ -1,7 +1,7 @@
-package deti.tqs.ua.HW1.controller;
+package deti.tqs.ua.controller;
 
-import deti.tqs.ua.HW1.model.Trip;
-import deti.tqs.ua.HW1.service.TripService;
+import deti.tqs.ua.model.Trip;
+import deti.tqs.ua.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,16 +15,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-
-@CrossOrigin("*")
 @RestController
 @RequestMapping(path = "/api/trips")
 @Tag(name = "Trip", description = "Operations for trips")
 public class TripController {
     private static final Logger logger = LoggerFactory.getLogger(TripController.class);
 
+    private final TripService tripService;
+
     @Autowired
-    private TripService tripService;
+    public TripController(TripService tripService) {
+        this.tripService = tripService;
+    }
 
     @GetMapping("/list")
     @Operation(summary = "Get all trips")
@@ -47,7 +49,8 @@ public class TripController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
     })
     public ResponseEntity<Trip> getTrip(@PathVariable int id, @RequestParam(required=false) String currency) {
-        logger.info("Trip " + id + " requested");
+        logger.info("Trip {} requested",id);
+
         return ResponseEntity.ok(tripService.getTrip(id, currency));
     }
 

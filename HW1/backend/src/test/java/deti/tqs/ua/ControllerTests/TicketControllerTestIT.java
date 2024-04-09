@@ -1,9 +1,9 @@
-package deti.tqs.ua.HW1.ControllerTests;
+package deti.tqs.ua.ControllerTests;
 
-import deti.tqs.ua.HW1.model.TicketDetails;
-import deti.tqs.ua.HW1.model.Trip;
-import deti.tqs.ua.HW1.repository.TicketRepo;
-import deti.tqs.ua.HW1.repository.TripRepo;
+import deti.tqs.ua.model.TicketDetails;
+import deti.tqs.ua.model.Trip;
+import deti.tqs.ua.repository.TicketRepo;
+import deti.tqs.ua.repository.TripRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")
 @AutoConfigureTestDatabase
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // needed to put this becuse CLI was saying that setup() needed to be static
-public class TicketControllerTestIT {
+class TicketControllerTestIT {
     @Autowired
     private TestRestTemplate restTemplate;
 

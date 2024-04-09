@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1.ControllerTests;
+package deti.tqs.ua.ControllerTests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")
 @AutoConfigureTestDatabase
-public class CurrExchangeControllerTestIT {
+class CurrExchangeControllerTestIT {
     @Autowired
     private TestRestTemplate restTemplate;
 

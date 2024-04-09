@@ -1,7 +1,7 @@
-package deti.tqs.ua.HW1.RepositoryTests;
+package deti.tqs.ua.RepositoryTests;
 
-import deti.tqs.ua.HW1.model.Trip;
-import deti.tqs.ua.HW1.repository.TripRepo;
+import deti.tqs.ua.model.Trip;
+import deti.tqs.ua.repository.TripRepo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class TripRepoTests {
+class TripRepoTests {
     @Autowired
     private TripRepo tripRepo;
 

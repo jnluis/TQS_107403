@@ -1,4 +1,4 @@
-package deti.tqs.ua.HW1.exception;
+package deti.tqs.ua.exception;
 
 public class ExternalServiceException extends Exception {
     public ExternalServiceException(String message, Throwable cause) {
