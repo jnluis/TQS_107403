@@ -18,6 +18,11 @@ jobs:
         with:
           java-version: 17
           distribution: "zulu"
+      #Step to create .env file from GitHub Secrets
+      - name: Setup .env file
+        run: |
+          echo -e "EXCHANGE_RATE_API_KEY=${{ secrets.EXCHANGE_RATE_API_KEY }}\SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" > HW1/backend/.env
+        shell: bash
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
