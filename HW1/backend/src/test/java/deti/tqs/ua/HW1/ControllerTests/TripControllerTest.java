@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -16,8 +17,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = TripController.class,properties="spring.profiles.active=test")
 public class TripControllerTest {
@@ -43,8 +44,8 @@ public class TripControllerTest {
 
         mvc.perform(get("/api/trips/origins"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value("Aveiro"));
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0]").value("Aveiro"));
 
     }
 
@@ -53,9 +54,8 @@ public class TripControllerTest {
 
         mvc.perform(get("/api/trips/destinations"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value("Aveiro"));
-
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0]").value("Aveiro"));
     }
 
     @Test
@@ -63,20 +63,23 @@ public class TripControllerTest {
 
         mvc.perform(get("/api/trips/dates"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value("2024-04-01"));
-
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0]").value("2024-04-01"));
     }
 
     @Test
-    @Disabled
+    public void whenGetTrip_thenReturnJson() throws Exception {
+        mvc.perform(get("/api/trips/1?currency=EUR")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     void whenHaveTrips_thenReturnExistentOne() throws Exception {
 
-        mvc.perform(get("/api/trips/dates"))
+        mvc.perform(get("/api/trips/list?origin=Aveiro&destination=Viseu&date=2024-04-01&currency=EUR"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value("2024-04-01"));
-
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
@@ -84,7 +87,8 @@ public class TripControllerTest {
 
         mvc.perform(get("/api/trips/list?origin=Aveiro&destination=Viseu&date=2034-04-01&currency=EUR"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").isEmpty());
-
+                .andExpect(jsonPath("$").isEmpty());
     }
+
+
 }

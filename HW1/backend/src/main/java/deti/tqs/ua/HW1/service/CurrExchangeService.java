@@ -4,7 +4,6 @@ import deti.tqs.ua.HW1.exception.CurrencyNotFoundException;
 import deti.tqs.ua.HW1.exception.ExternalServiceException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +23,15 @@ public class CurrExchangeService {
 
     private static final Logger logger = LoggerFactory.getLogger(CurrExchangeService.class);
     public List<String> currencies;
-    Map<String, Object> cachedRates = new HashMap<>();
+    Map<String, Object> cachedRates;
     private long lastCaching = 0;
     private int cacheTTL = 3600 * 100;
     private final String apiKey;
 
-    //@Autowired
     public CurrExchangeService () {
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("EXCHANGE_RATE_API_KEY");
+        cachedRates = new HashMap<>();
     }
 
     public CurrExchangeService(int TTL) {

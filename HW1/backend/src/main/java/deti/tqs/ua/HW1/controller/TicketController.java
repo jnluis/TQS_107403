@@ -41,7 +41,6 @@ public class TicketController {
             @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
     })
     public ResponseEntity<TicketDetails> reserveTicket(@RequestBody TicketDetails ticket) {
-        logger.info("watthhh "+ ticket);
         logger.info("Requested ticket purchase for trip " + ticket.getTripID());
 
         if (!tripService.tripExists(ticket.getTripID())) {

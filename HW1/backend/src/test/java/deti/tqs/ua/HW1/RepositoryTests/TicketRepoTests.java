@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@Disabled
 public class TicketRepoTests {
     @Autowired
     private TicketRepo ticketRepo;

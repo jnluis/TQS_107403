@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-@Disabled
 public class CacheSystemTest {
 
     private final static CurrExchangeService currencyExchangeService = new CurrExchangeService(1500); // 1.5 seconds of cache ttl
