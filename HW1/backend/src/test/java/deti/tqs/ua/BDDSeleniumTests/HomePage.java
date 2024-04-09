@@ -15,6 +15,6 @@ public class HomePage {
     }
 
     public void clickSeeTripsButton() {
-        driver.findElement(By.cssSelector(".btn:nth-child(2)")).click();
+        driver.findElement(By.cssSelector(".btn")).click();
     }
 }
