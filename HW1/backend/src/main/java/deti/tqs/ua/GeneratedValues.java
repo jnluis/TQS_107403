@@ -8,7 +8,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 @Component
-//@Generated
+@Generated
 @ConditionalOnProperty(name = "spring.profiles.active", havingValue = "dev")
 public class GeneratedValues implements ApplicationRunner {
     private static final Logger logger = LoggerFactory.getLogger(GeneratedValues.class);
