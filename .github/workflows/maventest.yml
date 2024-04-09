@@ -20,6 +20,12 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
+      #Step to create .env file from GitHub Secrets
+    - name: Setup .env file
+      run: |
+        echo -e "EXCHANGE_RATE_API_KEY=${{ secrets.EXCHANGE_RATE_API_KEY }}\SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" > HW1/backend/.env
+      shell: bash
+
     - name: Build and run unit tests with Maven
       run: cd HW1/backend && mvn test
       continue-on-error: false
