@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 @RestController
 @RequestMapping(path = "/api/ticket")
-@Tag(name = "Trip", description = "Operations for tickets")
+@Tag(name = "Ticket", description = "Operations for tickets")
 public class TicketController {
     private static final Logger logger = LoggerFactory.getLogger(TripController.class);
 

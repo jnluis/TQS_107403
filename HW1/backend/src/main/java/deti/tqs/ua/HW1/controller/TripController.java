@@ -41,24 +41,44 @@ public class TripController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get a trip by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
     public ResponseEntity<Trip> getTrip(@PathVariable int id, @RequestParam(required=false) String currency) {
         logger.info("Trip " + id + " requested");
         return ResponseEntity.ok(tripService.getTrip(id, currency));
     }
 
     @GetMapping("/dates")
+    @Operation(summary = "Get all trip dates available")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
     public ResponseEntity<List<String>> getDates() {
         logger.info("Dates list requested");
         return ResponseEntity.ok(tripService.getDates());
     }
 
     @GetMapping("/origins")
+    @Operation(summary = "Get all trip origins available")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
     public ResponseEntity<List<String>> getOrigins() {
         logger.info("Origins list requested");
         return ResponseEntity.ok(tripService.getOrigins());
     }
 
     @GetMapping("/destinations")
+    @Operation(summary = "Get all trip destinations available")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
     public ResponseEntity<List<String>> getDestinations() {
         logger.info("Destinations list requested");
         return ResponseEntity.ok(tripService.getDestinations());

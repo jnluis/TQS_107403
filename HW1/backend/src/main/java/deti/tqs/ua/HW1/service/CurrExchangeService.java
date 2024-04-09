@@ -120,10 +120,17 @@ public class CurrExchangeService {
 
     private void updateExchangeRates(String from) throws IOException, ExternalServiceException {
         String apiLink = "https://v6.exchangerate-api.com/v6/" + apiKey + "/latest/" + from;
+        List<String> allowedhosts = new ArrayList<>();
+        String content = null;
+        allowedhosts.add("https://v6.exchangerate-api.com/v6/");
 
-        String content;
         try {
-            content = RequestAPI(apiLink);
+            for (String host : allowedhosts) {
+                if (apiLink.startsWith(host))
+                    content = RequestAPI(apiLink);
+                else
+                    throw new ExternalServiceException("Invalid API link");
+            }
         } catch (Exception e) {
             throw new ExternalServiceException("Error fetching exchange rates from API", e);
         }
