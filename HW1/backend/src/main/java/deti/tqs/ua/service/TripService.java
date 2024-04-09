@@ -28,6 +28,9 @@ public class TripService {
         return tripsRepo.existsById(tripID);
     }
 
+    public List<Trip> listAllTrips() {
+        return tripsRepo.findAll();
+    }
     public List<Trip> listTrips(String origin, String destination, String date, String currency) {
         double exchangeRate;
         List<Trip> trips;

@@ -22,6 +22,9 @@
 		<junit.jupiter.version>5.9.2</junit.jupiter.version>
 		<junit-platform-suite.version>1.10.1</junit-platform-suite.version>
 		<surefire-plugin-version>3.0.0-M9</surefire-plugin-version>
+		<selenium-java.version>4.18.1</selenium-java.version>
+		<selenium-jupiter.version>5.0.1</selenium-jupiter.version>
+		<cucumber.version>7.15.0</cucumber.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -111,6 +114,30 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>spring-mock-mvc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>selenium-jupiter</artifactId>
+			<version>${selenium-jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit-platform-engine</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

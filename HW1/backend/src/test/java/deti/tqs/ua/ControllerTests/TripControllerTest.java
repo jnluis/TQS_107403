@@ -68,7 +68,7 @@ class TripControllerTest {
     }
 
     @Test
-    public void whenGetTrip_thenReturnJson() throws Exception {
+    void whenGetTrip_thenReturnJson() throws Exception {
         mvc.perform(get("/api/trips/1?currency=EUR")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());

@@ -43,14 +43,7 @@ public class CurrExchangeService {
         cachedRates = new HashMap<>();
     }
 
-    public boolean storeExchangeRates(Map<String, Object> rates) {
-        cachedRates = rates;
-        lastCaching = System.currentTimeMillis(); // in ms
-        logger.info("Caching exchange rates at {} for {} milliseconds",lastCaching, cacheTTL);
-        return true;
-    }
-
-    public String RequestAPI(String link) throws Exception {
+    public String requestAPI(String link) throws Exception {
         URL url = new URL(link);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         try {
@@ -129,7 +122,7 @@ public class CurrExchangeService {
         try {
             for (String host : allowedhosts) {
                 if (apiLink.startsWith(host))
-                    content = RequestAPI(apiLink);
+                    content = requestAPI(apiLink);
                 else
                     throw new ExternalServiceException("Invalid API link");
             }

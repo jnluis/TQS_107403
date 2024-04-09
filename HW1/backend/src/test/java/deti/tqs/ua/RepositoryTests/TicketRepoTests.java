@@ -21,7 +21,7 @@ class TicketRepoTests {
     private TicketRepo ticketRepo;
 
     @Test
-    public void testFindByTripID_returnsListOfTickets() {
+    void testFindByTripID_returnsListOfTickets() {
         TicketDetails ticket = new TicketDetails();
         ticket.setPrice("15");
         ticket.setTripID(1);
@@ -35,7 +35,7 @@ class TicketRepoTests {
     }
 
     @Test
-    public void testFindById_nonExistingId_returnsNull() {
+    void testFindById_nonExistingId_returnsNull() {
         String nonExistingId = "999";
 
         TicketDetails actualTicketDetails = ticketRepo.findById(nonExistingId);
@@ -44,7 +44,7 @@ class TicketRepoTests {
     }
 
     @Test
-    public void testFindByTripID_nonExistingTripID_returnsEmptyList() {
+    void testFindByTripID_nonExistingTripID_returnsEmptyList() {
         int nonExistingTripID = 20;
 
         List<TicketDetails> actualTickets = ticketRepo.findByTripID(nonExistingTripID);
@@ -52,7 +52,7 @@ class TicketRepoTests {
     }
 
     @Test
-    public void testDeleteByTripID_existingTripID_deletesTickets() {
+    void testDeleteByTripID_existingTripID_deletesTickets() {
         // Given there are tickets in the database with a specific trip ID
         int existingTripID = 5;
         TicketDetails ticket1 = new TicketDetails();
@@ -77,7 +77,7 @@ class TicketRepoTests {
     }
 
     @Test
-    public void testDeleteByTripID_nonExistingTripID_doesNothing() {
+    void testDeleteByTripID_nonExistingTripID_doesNothing() {
         // Given there are no tickets in the database with a specific trip ID
         int nonExistingTripID = 25;
         // Count all tickets in the database before the operation

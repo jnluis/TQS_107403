@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 @RestController
 @RequestMapping(path = "/api/trips")
+@CrossOrigin(origins = "*")
 @Tag(name = "Trip", description = "Operations for trips")
 public class TripController {
     private static final Logger logger = LoggerFactory.getLogger(TripController.class);

@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/currencies")
+@CrossOrigin(origins = "*")
 @Tag(name = "Currencies", description = "Operations for currencies")
 public class CurrExchangeController {
     private static final Logger logger = LoggerFactory.getLogger(CurrExchangeController.class);
