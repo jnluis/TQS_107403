@@ -8,8 +8,8 @@ import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
 /*@Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("deti/tqs/ua/BDDSeleniumTests")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "deti.ua.tqs.BDDSeleniumTests")
+@SelectClasspathResource("deti/tqs/ua/")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "deti.tqs.ua")
 public class CucumberTest {
 
 }*/
