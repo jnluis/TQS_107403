@@ -1,0 +1,3 @@
+[submodule "TQS_PhiHub"]
+	path = TQS_PhiHub
+	url = git@github.com:PhiHub-UA/TQS_PhiHub.git
